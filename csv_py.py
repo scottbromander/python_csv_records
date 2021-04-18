@@ -19,3 +19,11 @@ columns = [
     Column('trip_distance', 'distance', float),
 ]
 
+def iter_records(file_name):
+    with bz2.open(file_name, 'rt') as fp:
+        reader = csv.DictReader(fp)
+        for csv_record in reader:
+            record = {}
+            for col in columns:
+                value = csv_record[col.src]
+                record[col.dest] = col.convert(value)
